@@ -1,4 +1,10 @@
-﻿# Include path to email config file
+﻿<#
+# This script monitors and generates an email report regarding the capacity of drives on a system. 
+# The email will include a warning when any number of monitored drives' free space falls below the 
+# set percentage of its total capacity. 
+#>
+
+# Include path to email config file
 . "C:/scripts/email/config.ps1"
 
 # Drives / Properties to filter from (DriveType=3 to monitor all Hard Drives; DeviceID='C' for C: only)
