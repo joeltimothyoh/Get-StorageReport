@@ -18,7 +18,7 @@ $Logical_Drives_Info = Get-WmiObject -Class Win32_Logicaldisk -Filter $monitored
 $full_drives = $Logical_Drives_Info | Where-Object { ($_.FreeSpace/$_.Size) -le $free_space_threshold} | Measure-Object
 
 # Generate a table containing each monitored logical drive with their respective capacities
-$drive_capacity_report = $Logical_Drives_Info | 
+$drive_capacity_table = $Logical_Drives_Info | 
     Format-Table DeviceID,
                  #VolumeName,
                  @{ Name = "Size (GB)"; Expression = { [math]::Round($_.Size/1GB,2) } },
@@ -40,16 +40,20 @@ if ($full_drives.Count -gt 0) {
 }
 
 # Format body of report
+$drive_capacity_report = @()
+$drive_capacity_report += "Drive Capacity Check as of: $(Get-Date)"
+$drive_capacity_report += "Free Space Threshold: $([math]::Round([float]$free_space_threshold * 100))%"
+$drive_capacity_report += $drive_capacity_table
+
+# Print report the stdout
+Write-Output $title
+Write-Output $drive_capacity_report
+
+# Format body of email
 $body = @()
-$body += "<pre><p style='font-family: Courier New;'>"
-$body += "Drive Capacity Check as of: $(Get-Date)"
-$body += "Free Space Threshold: $([math]::Round([float]$free_space_threshold * 100))%"
+$body += "<pre><p style='font-family: Courier New; font-size: 11px;'>"
 $body += $drive_capacity_report
 $body += "</p></pre>"
-
-# Print report to console
-$title + "`n"
-$body
 
 # Email the report
 Send-Mailmessage -to $email_to -subject $title -Body ( $body | Out-String ) -SmtpServer $smtp_server -from $smtp_email -Port $smtp_port -UseSsl -Credential $credential -BodyAsHtml
