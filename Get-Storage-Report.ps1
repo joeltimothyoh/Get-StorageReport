@@ -1,31 +1,52 @@
-﻿# Get-Storage-Report.ps1
+﻿<#
+.SYNOPSIS
+This script monitors and generates an email report regarding the storage of drives on the system.
+
+.DESCRIPTION
+The email will include a warning when any number of monitored drives' free space falls below the set percentage of its total capacity.
+
+.EXAMPLE
+Get-Storage-Report.ps1
+
+#>
+
+#########################   Email Configuration   #########################
+
+# SMTP Server
+$smtp_server = 'smtp.server.com'
+
+# SMTP port (usually 465 or 587)
+$smtp_port = '587'
+
+# SMTP email address
+$smtp_email = 'sender@address.com'
+
+# SMTP password
+$smtp_password = 'Password'
+
+# Destination email address
+$email_to = 'recipient@address.com'
+
+# Source email address (usually matching SMTP email address)
+$email_from = 'sender@address.com'
+
+# Email title prefix
+$email_title_prefix = '[MachineName]'
+
+####################   Get-Storage-Report Settings   ####################
+
+# Logical drives to monitor (Comment out entries or leave blank to monitor all drives)
+$monitored_drives = @(
+    # 'C:'
+    # 'D:'
+)
+
+# Free space threshold before warning is issued (e.g. 0.1 for 10% free space)
+$free_space_threshold = '0.2'
+
+#########################################################################
 
 function Get-Storage-Report {
-    <#
-    .SYNOPSIS
-    This script monitors and generates an email report regarding the storage of drives on the system. 
-    The email will include a warning when any number of monitored drives' free space falls below the 
-    set percentage of its total capacity. 
-    
-    .DESCRIPTION
-    Long description
-    
-    .EXAMPLE
-    An example
-    
-    .NOTES
-    General notes
-    #>
-
-    # Logical drives to monitor (Separated by commas. e.g. 'C:','D:'. Leave array blank to monitor all drives)
-    $monitored_drives = @(
-    #    'C:',
-    #    'D:',
-    #    'E:'
-    )
-
-    # Free space threshold before warning is issued (e.g. 0.1 for 10% free space)
-    $free_space_threshold = '0.2'
 
     # Get info of monitored logical drives
     if ($monitored_drives.count -gt 0) {
@@ -46,14 +67,11 @@ function Get-Storage-Report {
                     @{ Name = "FreeSpace (GB)"; Expression = { [math]::Round($_.FreeSpace/1GB,2) } },
                     @{ Name = "FreeSpace (%)"; Expression = { "{0:P1}" -f ($_.FreeSpace/$_.Size) }; Alignment="right"; }
         
-    # Include path to email config file
-    . "C:/scripts/email/config.ps1"
-
-    # Define module name for report
+    # Module name to appear in title
     $module_name = "[Get-Storage-Report]"
 
     # Format title of report
-    $title = "$email_title_tag $module_name "
+    $title = "$module_name "
     if ($full_drives.Count -gt 0) {
         $title += "$($full_drives.Count) Drive(s) are getting full."
     } else {
@@ -70,14 +88,21 @@ function Get-Storage-Report {
     Write-Output $title
     Write-Output $drive_capacity_report
 
-    # Format body of email
-    $body = @()
-    $body += "<pre><p style='font-family: Courier New; font-size: 11px;'>"
-    $body += $drive_capacity_report
-    $body += "</p></pre>"
+    # Format title of email report
+    $email_title = "$email_title_prefix $title"
 
+    # Format body of email report
+    $email_body = @()
+    $email_body += "<pre><p style='font-family: Courier New; font-size: 11px;'>"
+    $email_body += $drive_capacity_report
+    $email_body += "</p></pre>"
+
+    # Secure credentials
+    $encrypted_password = $smtp_password | ConvertTo-SecureString -AsPlainText -Force
+    $credentials = New-Object System.Management.Automation.PSCredential( $smtp_email, $encrypted_password )
+    
     # Email the report
-    Send-Mailmessage -to $email_to -subject $title -Body ( $body | Out-String ) -SmtpServer $smtp_server -from $smtp_email -Port $smtp_port -UseSsl -Credential $credential -BodyAsHtml
+    Send-Mailmessage -to $email_to -subject $email_title -Body ( $email_body | Out-String ) -from $email_from -SmtpServer $smtp_server -Port $smtp_port -Credential $credentials -UseSsl -BodyAsHtml
 
     # Debug
     Write-Host "Full drive count: $($full_drives.Count)"
