@@ -1,6 +1,6 @@
 ﻿<#
 .SYNOPSIS
-This script monitors and generates an email report regarding the storage of local drives on the system.
+Monitors and generates an email report regarding the storage of local drives on the system.
 
 .DESCRIPTION
 The email will include a warning when any of the monitored local drive's free space falls below the set quota.
@@ -10,7 +10,7 @@ The email will include a warning when any of the monitored local drive's free sp
 
 #>
 
-########################   Email Configuration   ########################
+##########################   Email Settings   ###########################
 
 # SMTP Server
 $smtp_server = 'smtp.server.com'
