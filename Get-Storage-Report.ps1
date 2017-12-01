@@ -6,7 +6,7 @@ This script monitors and generates an email report regarding the storage of loca
 The email will include a warning when any of the monitored local drive's free space falls below the set quota.
 
 .EXAMPLE
-Get-Storage-Report.ps1
+.\Get-Storage-Report.ps1
 
 #>
 
