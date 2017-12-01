@@ -1,16 +1,16 @@
 ﻿<#
 .SYNOPSIS
-This script monitors and generates an email report regarding the storage of drives on the system.
+This script monitors and generates an email report regarding the storage of local drives on the system.
 
 .DESCRIPTION
-The email will include a warning when any number of monitored drives' free space falls below the set percentage of its total capacity.
+The email will include a warning when any of the monitored local drive's free space falls below the set quota.
 
 .EXAMPLE
 Get-Storage-Report.ps1
 
 #>
 
-#########################   Email Configuration   #########################
+########################   Email Configuration   ########################
 
 # SMTP Server
 $smtp_server = 'smtp.server.com'
@@ -35,7 +35,7 @@ $email_title_prefix = '[MachineName]'
 
 ####################   Get-Storage-Report Settings   ####################
 
-# Logical drives to monitor (Comment out entries or leave blank to monitor all drives)
+# Local logical drives to monitor (if unspecified, monitors all local logical drives)
 $monitored_drives = @(
     # 'C:'
     # 'D:'
@@ -48,12 +48,12 @@ $free_space_threshold = '0.2'
 
 function Get-Storage-Report {
 
-    # Get info of monitored logical drives
+    # Get info of local logical drives
     if ($monitored_drives.count -gt 0) {
-        $Logical_Drives_Info = Get-WmiObject -Class Win32_Logicaldisk | Where-Object { $monitored_drives -contains $_.DeviceID }
+        $Logical_Drives_Info = Get-WmiObject -Class Win32_Logicaldisk | Where-Object { ($monitored_drives -contains $_.DeviceID) -And (($_.DriveType -eq 2) -Or ($_.DriveType -eq 3)) }
 
     } else {
-        $Logical_Drives_Info = Get-WmiObject -Class Win32_Logicaldisk
+        $Logical_Drives_Info = Get-WmiObject -Class Win32_Logicaldisk | Where-Object { (($_.DriveType -eq 2) -Or ($_.DriveType -eq 3)) }
     }
 
     # Count the number of logical drives low on free space
