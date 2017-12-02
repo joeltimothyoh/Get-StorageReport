@@ -1,9 +1,9 @@
 ﻿<#
 .SYNOPSIS
-Monitors and generates an email report regarding the storage of local drives on the system.
+Generates and emails a report regarding the storage of local drives on the system.
 
 .DESCRIPTION
-The email will include a warning when any of the monitored local drive's free space falls below the set quota.
+The report will warn when any of the monitored local drive's free space falls below the set quota.
 
 .EXAMPLE
 .\Get-Storage-Report.ps1
@@ -105,7 +105,7 @@ function Get-Storage-Report {
     Send-Mailmessage -to $email_to -subject $email_title -Body ( $email_body | Out-String ) -from $email_from -SmtpServer $smtp_server -Port $smtp_port -Credential $credentials -UseSsl -BodyAsHtml
 
     # Debug
-    Write-Host "Full drive count: $($full_drives.Count)"
+    # Write-Host "Full drive count: $($full_drives.Count)"
 
 }
 
