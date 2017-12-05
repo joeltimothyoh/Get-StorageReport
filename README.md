@@ -6,7 +6,8 @@ The report will warn when any of the monitored local drive's free space falls be
 ## Usage
 Fill in email settings, and set both the drives to monitor and the free space threshold within the .ps1 script. Then manually run, or set the script to run on a schedule.
 
-.\Get-Storage-Report.ps1
+## Example
+`.\Get-Storage-Report.ps1`
 
 ## Compatibility
 This script currently only works with Windows.
