@@ -61,11 +61,11 @@ function Get-Storage-Report {
 
     # Generate a table containing each monitored logical drive with their respective capacities
     $drive_capacity_table = $Logical_Drives_Info | 
-        Format-Table DeviceID,
-                    #VolumeName,
-                    @{ Name = "Size (GB)"; Expression = { [math]::Round($_.Size/1GB,2) } },
-                    @{ Name = "FreeSpace (GB)"; Expression = { [math]::Round($_.FreeSpace/1GB,2) } },
-                    @{ Name = "FreeSpace (%)"; Expression = { "{0:P1}" -f ($_.FreeSpace/$_.Size) }; Alignment="right"; }
+        Format-Table DeviceID,                                                                                              # DeviceID for drive letter
+                     VolumeName,                                                                                            # VolumeName for logical volume name
+                     @{ Name = "Size (GB)"; Expression = { [math]::Round($_.Size/1GB,2) } },                                # Size for logical volume size
+                     @{ Name = "FreeSpace (GB)"; Expression = { [math]::Round($_.FreeSpace/1GB,2) } },                      # FreeSpace for logical volume free space
+                     @{ Name = "FreeSpace (%)"; Expression = { "{0:P1}" -f ($_.FreeSpace/$_.Size) }; Alignment="right" }    # FreeSpace (%) for logical volume free space percent
         
     # Module name to appear in title
     $module_name = "[Get-Storage-Report]"
@@ -103,9 +103,6 @@ function Get-Storage-Report {
     
     # Email the report
     Send-Mailmessage -to $email_to -subject $email_title -Body ( $email_body | Out-String ) -from $email_from -SmtpServer $smtp_server -Port $smtp_port -Credential $credentials -UseSsl -BodyAsHtml
-
-    # Debug
-    # Write-Host "Full drive count: $($full_drives.Count)"
 
 }
 
