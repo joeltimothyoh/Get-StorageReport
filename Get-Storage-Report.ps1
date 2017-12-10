@@ -79,10 +79,11 @@ function Get-Storage-Report {
     }
 
     # Format body of report
-    $drive_capacity_report = @()
-    $drive_capacity_report += "Drive Capacity Check as of: $(Get-Date)"
-    $drive_capacity_report += "Free Space Threshold: $([math]::Round([float]$free_space_threshold * 100))%"
-    $drive_capacity_report += $drive_capacity_table
+    $drive_capacity_report = @(
+        "Drive Capacity Check as of: $(Get-Date)"
+        "Free Space Threshold: $([math]::Round([float]$free_space_threshold * 100))%"
+        $drive_capacity_table
+    )
 
     # Print report the stdout
     Write-Output $title
@@ -92,10 +93,11 @@ function Get-Storage-Report {
     $email_title = "$email_title_prefix $title"
 
     # Format body of email report
-    $email_body = @()
-    $email_body += "<pre><p style='font-family: Courier New; font-size: 11px;'>"
-    $email_body += $drive_capacity_report
-    $email_body += "</p></pre>"
+    $email_body = @(
+        "<pre><p style='font-family: Courier New; font-size: 11px;'>"
+        $drive_capacity_report
+        "</p></pre>"
+    )
 
     # Secure credentials
     $encrypted_password = $smtp_password | ConvertTo-SecureString -AsPlainText -Force
