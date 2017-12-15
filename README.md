@@ -10,4 +10,4 @@ Fill in email settings, and set both the drives to monitor and the free space th
 `.\Get-Storage-Report.ps1`
 
 ## Compatibility
-This script currently only works with Windows.
+Get-Storage-Report currently only works with Windows.
