@@ -47,7 +47,6 @@
     # Get info of local logical drives
     if ($Drive.count -gt 0) {
         $Logical_Drives_Info = Get-WmiObject -Class Win32_Logicaldisk | Where-Object { ($Drive -contains $_.DeviceID) -And (($_.DriveType -eq 2) -Or ($_.DriveType -eq 3)) }
-
     } else {
         $Logical_Drives_Info = Get-WmiObject -Class Win32_Logicaldisk | Where-Object { (($_.DriveType -eq 2) -Or ($_.DriveType -eq 3)) }
     }
@@ -63,7 +62,7 @@
         @{ Name = "FreeSpace (GB)"; Expression = { [math]::Round($_.FreeSpace/1GB,2) } },                      # FreeSpace for logical volume free space
         @{ Name = "FreeSpace (%)"; Expression = { "{0:P1}" -f ($_.FreeSpace/$_.Size) }; Alignment="right" }    # FreeSpace (%) for logical volume free space percent
 
-    # Trim the new lines in the formatted table
+    # Trim newlines in the formatted table
     $drive_capacity_table = ($drive_capacity_table | Out-String).Trim()
 
     # Module name to appear in title
@@ -84,7 +83,7 @@
         $drive_capacity_table
     )
 
-    # Print report the stdout
+    # Print report to stdout
     Write-Output $title
     Write-Output $drive_capacity_report
     Write-Output "-"

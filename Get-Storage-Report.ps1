@@ -84,7 +84,6 @@ function Get-Storage-Report {
     # Get info of local logical drives
     if ($Drive.count -gt 0) {
         $Logical_Drives_Info = Get-WmiObject -Class Win32_Logicaldisk | Where-Object { ($Drive -contains $_.DeviceID) -And (($_.DriveType -eq 2) -Or ($_.DriveType -eq 3)) }
-
     } else {
         $Logical_Drives_Info = Get-WmiObject -Class Win32_Logicaldisk | Where-Object { (($_.DriveType -eq 2) -Or ($_.DriveType -eq 3)) }
     }
@@ -121,7 +120,7 @@ function Get-Storage-Report {
         $drive_capacity_table
     )
 
-    # Print report the stdout
+    # Print report to stdout
     Write-Output $title
     Write-Output $drive_capacity_report
     Write-Output "-"
