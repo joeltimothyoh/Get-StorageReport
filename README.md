@@ -31,7 +31,7 @@ Refer to Microsoft's documentation or guides for further help on using *Task Sch
 ## Parameters
 
 ```
-Get-Storage-Report [[-Drives] <String[]>] [[-Threshold] <Single>] [<CommonParameters>]
+Get-Storage-Report [[-Drive] <String[]>] [[-Threshold] <Single>] [<CommonParameters>]
 
 PARAMETERS
     -Drive <String[]>
@@ -60,7 +60,7 @@ Powershell "C:\scripts\Get-Storage-Report\Get-Storage-Report.ps1"
 Runs the `Get-Storage-Report` module to get the storage status of `C:` and `D:`, with a specified free space threshold of `10`%.
 
 ```
-Get-Storage-Report -Drives C:, D: -Threshold 10
+Get-Storage-Report -Drive C:, D: -Threshold 10
 ```
 
 ## Security
