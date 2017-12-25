@@ -45,7 +45,7 @@ $smtp_port = '587'
 # SMTP email address
 $smtp_email = 'sender@address.com'
 
-# SMTP password
+# SMTP email password
 $smtp_password = 'Password'
 
 # Source email address (usually matching SMTP email address)
@@ -144,7 +144,7 @@ function Get-Storage-Report {
     $encrypted_password = $smtp_password | ConvertTo-SecureString -AsPlainText -Force
     $credential = New-Object System.Management.Automation.PSCredential( $smtp_email, $encrypted_password )
 
-    # Define Send-Mailmessage parameters
+    # Define Send-MailMessage parameters
     $emailprm = @{
         SmtpServer = $smtp_server
         Port = $smtp_port
@@ -159,7 +159,7 @@ function Get-Storage-Report {
 
     # Email the report
     try {
-        Send-Mailmessage @emailprm -ErrorAction Stop
+        Send-MailMessage @emailprm -ErrorAction Stop
     } catch {
         Write-Output "Failed to send email. Reason: $($_.Exception.Message)"
     }
