@@ -31,7 +31,7 @@ $monitored_drives = @(
   # 'D:'
 )
 
-# Threshold for free space in percent below which a warning is issued.
+# Threshold for free space in percent below which a warning is issued
 $freespace_threshold_percent = '10.0'
 
 ##########################   Email Settings   ###########################
