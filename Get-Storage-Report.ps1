@@ -135,9 +135,9 @@ function Get-Storage-Report {
 
     # Format body of email report
     $email_body = @(
-        "<pre><p style='font-family: Courier New; font-size: 11px;'>"
+        "<html><pre style='font-family: Courier New; font-size: 11px;'>"
         $drive_capacity_report
-        "</p></pre>"
+        "</pre></html>"
     )
 
     # Secure credential
