@@ -1,4 +1,4 @@
-﻿function Get-Storage-Report {
+﻿function Get-StorageReport {
     <#
     .SYNOPSIS
     Generates a report regarding the storage status of local logical drives on the system.
@@ -13,15 +13,15 @@
     The threshold for free space in percent below which a warning would be issued.
 
     .EXAMPLE
-    Powershell "C:\scripts\Get-Storage-Report\Get-Storage-Report.ps1"
-    Runs the Get-Storage-Report.ps1 script in an instance of PowerShell.
+    Powershell "C:\scripts\Get-StorageReport\Get-StorageReport.ps1"
+    Runs the Get-StorageReport.ps1 script in an instance of PowerShell.
 
     .EXAMPLE
-    Get-Storage-Report -Drive C:, D: -Threshold 10
-    Runs the Get-Storage-Report module to get the storage status of C: and D:, with a specified free space threshold of 10%.
+    Get-StorageReport -Drive C:, D: -Threshold 10
+    Runs the Get-StorageReport module to get the storage status of C: and D:, with a specified free space threshold of 10%.
 
     .LINK
-    https://github.com/joeltimothyoh/Get-Storage-Report
+    https://github.com/joeltimothyoh/Get-StorageReport
     #>
 
     [CmdletBinding()]
@@ -66,7 +66,7 @@
     $drive_capacity_table = ($drive_capacity_table | Out-String).Trim()
 
     # Module name to appear in title
-    $module_name = "[Get-Storage-Report]"
+    $module_name = "[Get-StorageReport]"
 
     # Format title of report
     $title = "$module_name "
@@ -91,4 +91,4 @@
 }
 
 # Export the members of the module
-Export-ModuleMember -Function Get-Storage-Report
+Export-ModuleMember -Function Get-StorageReport

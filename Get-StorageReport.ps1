@@ -12,18 +12,18 @@ Logical drive(s) to get the storage status of.
 The threshold for free space in percent below which a warning would be issued.
 
 .EXAMPLE
-Powershell "C:\scripts\Get-Storage-Report\Get-Storage-Report.ps1"
-Runs the Get-Storage-Report.ps1 script in an instance of PowerShell.
+Powershell "C:\scripts\Get-StorageReport\Get-StorageReport.ps1"
+Runs the Get-StorageReport.ps1 script in an instance of PowerShell.
 
 .EXAMPLE
-Get-Storage-Report -Drive C:, D: -Threshold 10
-Runs the Get-Storage-Report module to get the storage status of C: and D:, with a specified free space threshold of 10%.
+Get-StorageReport -Drive C:, D: -Threshold 10
+Runs the Get-StorageReport module to get the storage status of C: and D:, with a specified free space threshold of 10%.
 
 .LINK
-https://github.com/joeltimothyoh/Get-Storage-Report
+https://github.com/joeltimothyoh/Get-StorageReport
 #>
 
-####################   Get-Storage-Report Settings   ####################
+####################   Get-StorageReport Settings   ####################
 
 # Logical drive(s) to get the storage status of (If unspecified, monitors all drives)
 $monitored_drives = @(
@@ -59,7 +59,7 @@ $email_title_prefix = '[MachineName]'
 
 #########################################################################
 
-function Get-Storage-Report {
+function Get-StorageReport {
 
     [CmdletBinding()]
     Param(
@@ -103,7 +103,7 @@ function Get-Storage-Report {
     $drive_capacity_table = ($drive_capacity_table | Out-String).Trim()
 
     # Module name to appear in title
-    $module_name = "[Get-Storage-Report]"
+    $module_name = "[Get-StorageReport]"
 
     # Format title of report
     $title = "$module_name "
@@ -172,4 +172,4 @@ if ($monitored_drives.count -gt 0) {
 }
 
 # Call main function
-Get-Storage-Report -Drive $monitored_drives -Threshold $freespace_threshold_percent
+Get-StorageReport -Drive $monitored_drives -Threshold $freespace_threshold_percent

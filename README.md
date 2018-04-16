@@ -1,4 +1,4 @@
-# Get-Storage-Report
+# Get-StorageReport
 
 Generates a report regarding the storage status of local logical drives on the system.
 
@@ -8,23 +8,23 @@ The report will include a warning when one or more local logical drives' free sp
 
 ## Usage
 
-Get-Storage-Report can be used as a script or module. Scripts allow for greater portability and isolation, while modules allow for greater accessibility, scalability and upgradability.
+Get-StorageReport can be used as a script or module. Scripts allow for greater portability and isolation, while modules allow for greater accessibility, scalability and upgradability.
 
-The `Get-Storage-Report.ps1` script has the additional ability to email reports.
+The `Get-StorageReport.ps1` script has the additional ability to email reports.
 
 ### Script
 
-* Configure the settings within the `Get-Storage-Report.ps1` script.
+* Configure the settings within the `Get-StorageReport.ps1` script.
 * Run the script to get a report and send it via email.
 
 ### Module
 
-* Install the `Get-Storage-Report.psm1` module. Refer to Microsoft's documentation on installing PowerShell modules.
-* Call the module via `Get-Storage-Report` in PowerShell to get a report.
+* Install the `Get-StorageReport.psm1` module. Refer to Microsoft's documentation on installing PowerShell modules.
+* Call the module via `Get-StorageReport` in PowerShell to get a report.
 
 ## Scheduling
 
-The `Get-Storage-Report.ps1` script can be scheduled to periodically notify on the storage status of logical drives on the system.
+The `Get-StorageReport.ps1` script can be scheduled to periodically notify on the storage status of logical drives on the system.
 
 * Set up the script to be run.
 * In *Task Scheduler*, create a task with the following *Action*:
@@ -38,7 +38,7 @@ Refer to Microsoft's documentation or guides for further help on using *Task Sch
 ## Parameters
 
 ```
-Get-Storage-Report [[-Drive] <String[]>] [[-Threshold] <Single>] [<CommonParameters>]
+Get-StorageReport [[-Drive] <String[]>] [[-Threshold] <Single>] [<CommonParameters>]
 
 PARAMETERS
     -Drive <String[]>
@@ -58,23 +58,23 @@ PARAMETERS
 
 #### Example 1
 
-Runs the `Get-Storage-Report.ps1` script in an instance of PowerShell.
+Runs the `Get-StorageReport.ps1` script in an instance of PowerShell.
 
 ```
-Powershell "C:\scripts\Get-Storage-Report\Get-Storage-Report.ps1"
+Powershell "C:\scripts\Get-StorageReport\Get-StorageReport.ps1"
 ```
 
 #### Example 2
 
-Runs the `Get-Storage-Report` module to get the storage status of `C:` and `D:`, with a specified free space threshold of `10`%.
+Runs the `Get-StorageReport` module to get the storage status of `C:` and `D:`, with a specified free space threshold of `10`%.
 
 ```
-Get-Storage-Report -Drive C:, D: -Threshold 10
+Get-StorageReport -Drive C:, D: -Threshold 10
 ```
 
 ## Security
 
-Unverified scripts are restricted from running on Windows by default. In order to use Get-Storage-Report, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then run the command:
+Unverified scripts are restricted from running on Windows by default. In order to use Get-StorageReport, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then run the command:
 
 ```
 Set-ExecutionPolicy Unrestricted -Force
