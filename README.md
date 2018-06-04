@@ -37,7 +37,7 @@ Refer to Microsoft's documentation or guides for further help on using *Task Sch
 
 ## Parameters
 
-```
+```powershell
 Get-StorageReport [[-Drive] <String[]>] [[-Threshold] <Single>] [<CommonParameters>]
 
 PARAMETERS
@@ -60,7 +60,7 @@ PARAMETERS
 
 Runs the `Get-StorageReport.ps1` script in an instance of PowerShell.
 
-```
+```powershell
 Powershell "C:\scripts\Get-StorageReport\Get-StorageReport.ps1"
 ```
 
@@ -68,21 +68,21 @@ Powershell "C:\scripts\Get-StorageReport\Get-StorageReport.ps1"
 
 Runs the `Get-StorageReport` module to get the storage status of `C:` and `D:`, with a specified free space threshold of `10`%.
 
-```
+```powershell
 Get-StorageReport -Drive C:, D: -Threshold 10
 ```
 
 ## Security
 
-Unverified scripts are restricted from running on Windows by default. In order to use Get-StorageReport, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then run the command:
+Unverified scripts are restricted from running on Windows by default. In order to use `Get-StorageReport`, you will need to allow the execution of unverified scripts. To do so, open PowerShell as an *Administrator*. Then run the command:
 
-```
+```powershell
 Set-ExecutionPolicy Unrestricted -Force
 ```
 
 If you wish to revert the policy, run the command:
 
-```
+```powershell
 Set-ExecutionPolicy Undefined -Force
 ```
 
