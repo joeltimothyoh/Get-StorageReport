@@ -2,6 +2,18 @@
 
 Generates a report regarding the storage status of local logical drives on the system.
 
+## Deprecation notice
+
+This script / module outputs a system's storage information as a custom formatted report as array of strings rather than as objects for consumption further down a pipeline, making it unmodular and very much anthetical to PowerShell's general design and approach in dealing with objects rather than strings.
+
+To get storage information, simply use PowerShell's built-in `Get-PSDrive`:
+
+```powershell
+Get-PSDrive -PSProvider FileSystem
+```
+
+Also, instead of relying on emails, consider using tools (e.g. Prometheus) for monitoring and alerting at scale.
+
 ## Description
 
 The report will include a warning when one or more local logical drives' free space falls below the set threshold.
